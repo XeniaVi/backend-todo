@@ -1,7 +1,7 @@
 import TodoService from "../Services/TodoService.js";
 
 class TodoController {
-  async add(req, res) {
+  static async add(req, res) {
     try {
       const todo = await TodoService.add(req.body);
       return res.json(todo);
@@ -11,4 +11,4 @@ class TodoController {
   }
 }
 
-export default new TodoController();
+export default TodoController;
