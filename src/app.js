@@ -8,8 +8,6 @@ const app = express();
 app.use(express.json());
 app.use("/api", router);
 
-console.log(config);
-
 async function startApp() {
   try {
     mongoose.connect(config.DB_URL, {
