@@ -18,6 +18,12 @@ class TodoService {
     });
     return updateTodo;
   }
+
+  static async delete(id) {
+    if (!id) throw new Error("Id doesn't exist");
+    const todo = await Todo.findByIdAndDelete(id);
+    return todo;
+  }
 }
 
 export default TodoService;
