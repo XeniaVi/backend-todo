@@ -9,6 +9,15 @@ class TodoController {
       res.status(500).json(error.message);
     }
   }
+
+  static async getAll(req, res) {
+    try {
+      const todos = await TodoService.getAll();
+      return res.json(todos);
+    } catch (error) {
+      res.status(500).json(error.message);
+    }
+  }
 }
 
 export default TodoController;
