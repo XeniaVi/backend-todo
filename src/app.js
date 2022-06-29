@@ -1,10 +1,12 @@
 import express from "express";
 import mongoose from "mongoose";
+import router from "./routers/router.js";
 import { config } from "./config/config.js";
 
 const app = express();
 
-console.log(config);
+app.use(express.json());
+app.use("/api", router);
 
 async function startApp() {
   try {
