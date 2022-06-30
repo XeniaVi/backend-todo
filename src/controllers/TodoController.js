@@ -1,4 +1,4 @@
-import TodoService from "../Services/TodoService.js";
+import TodoService from "../services/TodoService.js";
 
 class TodoController {
   static async add(req, res) {

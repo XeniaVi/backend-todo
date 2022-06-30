@@ -1,4 +1,4 @@
-import Todo from "../Schemes/Todo.js";
+import Todo from "../schemas/Todo.js";
 import { prepareObject } from "../helpers/helper.js";
 
 class TodoService {
