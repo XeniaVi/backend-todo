@@ -27,6 +27,15 @@ class TodoController {
       res.status(500).json(error.message);
     }
   }
+
+  static async delete(req, res) {
+    try {
+      const todo = await TodoService.delete(req.params.id);
+      return res.json(todo);
+    } catch (error) {
+      res.status(500).json(error.message);
+    }
+  }
 }
 
 export default TodoController;
