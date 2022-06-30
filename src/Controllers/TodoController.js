@@ -20,8 +20,9 @@ class TodoController {
   }
 
   static async update(req, res) {
+    const { id } = req.params;
     try {
-      const todo = await TodoService.update(req.body);
+      const todo = await TodoService.update(req.body, id);
       return res.json(todo);
     } catch (error) {
       res.status(500).json(error.message);
@@ -29,8 +30,9 @@ class TodoController {
   }
 
   static async delete(req, res) {
+    const { id } = req.params;
     try {
-      const todo = await TodoService.delete(req.params.id);
+      const todo = await TodoService.delete(id);
       return res.json(todo);
     } catch (error) {
       res.status(500).json(error.message);
