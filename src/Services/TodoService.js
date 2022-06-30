@@ -1,4 +1,5 @@
 import Todo from "../Schemes/Todo.js";
+import { prepareObject } from "../helpers/helper.js";
 
 class TodoService {
   static async add(todo) {
@@ -7,7 +8,11 @@ class TodoService {
   }
 
   static async getAll() {
-    const todos = await Todo.find();
+    let todos = await Todo.find();
+    todos = todos.map((todo) => {
+      todo = prepareObject(todo);
+      return todo;
+    });
     return todos;
   }
 
