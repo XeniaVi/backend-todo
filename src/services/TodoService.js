@@ -1,5 +1,5 @@
-import Todo from "../schemas/Todo.js";
-import { prepareObject } from "../helpers/helper.js";
+import Todo from "../models/Todo.js";
+import { prepareTodoObject } from "../helpers/helper.js";
 
 class TodoService {
   static async add(todo) {
@@ -10,7 +10,7 @@ class TodoService {
   static async getAll() {
     let todos = await Todo.find();
     todos = todos.map((todo) => {
-      todo = prepareObject(todo);
+      todo = prepareTodoObject(todo);
       return todo;
     });
     return todos;
