@@ -5,6 +5,5 @@ export const prepareTodoObject = (item) => {
     id: _id,
     value: value,
     completed: completed,
-    isEditing: false,
   };
 };
