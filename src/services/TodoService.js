@@ -3,9 +3,8 @@ import { prepareTodoObject } from "../helpers/helper.js";
 
 class TodoService {
   static async add(todo) {
-    let newTodo = await Todo.create(todo);
-    newTodo = prepareTodoObject(newTodo);
-    return newTodo;
+    const newTodo = await Todo.create(todo);
+    return prepareTodoObject(newTodo);
   }
 
   static async getAll() {
@@ -19,12 +18,11 @@ class TodoService {
 
   static async update(post, id) {
     if (!id) throw new Error("Id doesn't exist");
-    let updateTodo = await Todo.findByIdAndUpdate(id, post, {
+    const updateTodo = await Todo.findByIdAndUpdate(id, post, {
       new: true,
     });
 
-    updateTodo = prepareTodoObject(updateTodo);
-    return updateTodo;
+    return prepareTodoObject(updateTodo);
   }
 
   static async updateSome(completed, ids) {
