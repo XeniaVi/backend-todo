@@ -4,7 +4,7 @@ import { prepareTodoObject } from "../helpers/helper.js";
 class TodoService {
   static async add(todo) {
     const newTodo = await Todo.create(todo);
-    return newTodo;
+    return prepareTodoObject(newTodo);
   }
 
   static async getAll() {
@@ -21,7 +21,27 @@ class TodoService {
     const updateTodo = await Todo.findByIdAndUpdate(id, post, {
       new: true,
     });
-    return updateTodo;
+
+    return prepareTodoObject(updateTodo);
+  }
+
+  static async updateSome(completed, ids) {
+    await Todo.updateMany(
+      {
+        _id: { $in: ids },
+      },
+      { $set: { completed } }
+    );
+
+    let updatedTodos = await Todo.find({
+      _id: { $in: ids },
+    });
+
+    updatedTodos = updatedTodos.map((todo) => {
+      todo = prepareTodoObject(todo);
+      return todo;
+    });
+    return updatedTodos;
   }
 
   static async delete(id) {
