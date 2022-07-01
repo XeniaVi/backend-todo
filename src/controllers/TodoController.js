@@ -29,6 +29,16 @@ class TodoController {
     }
   }
 
+  static async updateAll(req, res) {
+    const { completed } = req.body;
+    try {
+      const todos = await TodoService.updateAll(completed);
+      return res.json(todos);
+    } catch (error) {
+      res.status(500).json(error.message);
+    }
+  }
+
   static async delete(req, res) {
     const { id } = req.params;
     try {

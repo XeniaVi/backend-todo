@@ -24,6 +24,23 @@ class TodoService {
     return updateTodo;
   }
 
+  static async updateAll(completed) {
+    await Todo.updateMany(
+      {
+        _id: { $in: ["62bc5631612e0459b1d68df3", "62bc5632612e0459b1d68df5"] },
+      },
+      { $set: { completed } }
+    );
+    let updatedTodos = await Todo.find({
+      _id: { $in: ["62bc5631612e0459b1d68df3", "62bc5632612e0459b1d68df5"] },
+    });
+    updatedTodos = updatedTodos.map((todo) => {
+      todo = prepareTodoObject(todo);
+      return todo;
+    });
+    return updatedTodos;
+  }
+
   static async delete(id) {
     if (!id) throw new Error("Id doesn't exist");
     const todo = await Todo.findByIdAndDelete(id);
