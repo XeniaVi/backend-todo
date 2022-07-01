@@ -27,16 +27,18 @@ class TodoService {
     return updateTodo;
   }
 
-  static async updateAll(completed) {
+  static async updateSome(completed, ids) {
     await Todo.updateMany(
       {
-        _id: { $in: ["62bc5631612e0459b1d68df3", "62bc5632612e0459b1d68df5"] },
+        _id: { $in: ids },
       },
       { $set: { completed } }
     );
+
     let updatedTodos = await Todo.find({
-      _id: { $in: ["62bc5631612e0459b1d68df3", "62bc5632612e0459b1d68df5"] },
+      _id: { $in: ids },
     });
+
     updatedTodos = updatedTodos.map((todo) => {
       todo = prepareTodoObject(todo);
       return todo;
