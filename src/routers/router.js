@@ -8,5 +8,6 @@ router.get("/todos", TodoController.getAll);
 router.put("/todos/:id", TodoController.update);
 router.put("/todos", TodoController.updateSome);
 router.delete("/todos/:id", TodoController.delete);
+router.delete("/todos/", TodoController.deleteSome);
 
 export default router;

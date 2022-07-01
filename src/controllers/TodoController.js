@@ -48,6 +48,16 @@ class TodoController {
       res.status(500).json(error.message);
     }
   }
+
+  static async deleteSome(req, res) {
+    const { condition } = req.body;
+    try {
+      const response = await TodoService.deleteSome(condition);
+      return res.json(response);
+    } catch (error) {
+      res.status(500).json(error.message);
+    }
+  }
 }
 
 export default TodoController;
