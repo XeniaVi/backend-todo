@@ -20,9 +20,11 @@ class TodoController {
   }
 
   static async update(req, res) {
+    const post = req.body;
     const { id } = req.params;
+
     try {
-      const todo = await TodoService.update(req.body, id);
+      const todo = await TodoService.update(post, id);
       return res.json(todo);
     } catch (error) {
       res.status(500).json(error.message);
@@ -44,6 +46,16 @@ class TodoController {
     try {
       const todo = await TodoService.delete(id);
       return res.json(todo);
+    } catch (error) {
+      res.status(500).json(error.message);
+    }
+  }
+
+  static async deleteSome(req, res) {
+    const { ids } = req.body;
+    try {
+      const response = await TodoService.deleteSome(ids);
+      return res.json(response);
     } catch (error) {
       res.status(500).json(error.message);
     }
