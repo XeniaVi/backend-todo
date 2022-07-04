@@ -7,3 +7,16 @@ export const prepareTodoObject = (item) => {
     completed: completed,
   };
 };
+
+export const validateFields = (post) => {
+  const length = Object.keys(post).length;
+  if (
+    length === 2 &&
+    typeof post.value === "string" &&
+    typeof post.completed === "boolean"
+  )
+    return post;
+  if (length === 1 && typeof post.value === "string") return post;
+  if (length === 1 && typeof post.completed === "boolean") return post;
+  return {};
+};
