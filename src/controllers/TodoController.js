@@ -12,7 +12,8 @@ class TodoController {
 
   static async getAll(req, res) {
     try {
-      const todos = await TodoService.getAll();
+      const { offset, limit } = req.query;
+      const todos = await TodoService.getAll(offset, limit);
       return res.json(todos);
     } catch (error) {
       res.status(500).json(error.message);

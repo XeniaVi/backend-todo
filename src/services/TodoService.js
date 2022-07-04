@@ -7,8 +7,8 @@ class TodoService {
     return prepareTodoObject(newTodo);
   }
 
-  static async getAll() {
-    let todos = await Todo.find();
+  static async getAll(offset, limit) {
+    let todos = await Todo.find().skip(offset).limit(limit);
     todos = todos.map((todo) => {
       todo = prepareTodoObject(todo);
       return todo;
