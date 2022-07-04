@@ -16,8 +16,23 @@ class TodoService {
     return todos;
   }
 
-  static async update(post, id) {
+  static async update(value, id) {
     if (!id) throw new Error("Id doesn't exist");
+    let post = {};
+    switch (typeof value) {
+      case "string": {
+        post = { value };
+        break;
+      }
+      case "boolean": {
+        post = { completed: value };
+        break;
+      }
+      default: {
+        post = {};
+      }
+    }
+
     const updateTodo = await Todo.findByIdAndUpdate(id, post, {
       new: true,
     });
