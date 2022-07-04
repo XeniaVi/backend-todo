@@ -1,5 +1,5 @@
 import Todo from "../models/Todo.js";
-import { prepareTodoObject, validateFields } from "../helpers/helper.js";
+import { prepareTodoObject } from "../helpers/helper.js";
 
 class TodoService {
   static async add(todo) {
@@ -18,8 +18,7 @@ class TodoService {
 
   static async update(post, id) {
     if (!id) throw new Error("Id doesn't exist");
-    const validatePost = validateFields(post);
-    const updateTodo = await Todo.findByIdAndUpdate(id, validatePost, {
+    const updateTodo = await Todo.findByIdAndUpdate(id, post, {
       new: true,
     });
 
