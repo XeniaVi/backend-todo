@@ -65,8 +65,10 @@ class TodoService {
     return todo;
   }
 
-  static async deleteSome(condition) {
-    const response = await Todo.deleteMany(condition);
+  static async deleteSome(ids) {
+    const response = await Todo.deleteMany({
+      _id: { $in: ids },
+    });
     return response;
   }
 }

@@ -52,9 +52,9 @@ class TodoController {
   }
 
   static async deleteSome(req, res) {
-    const { condition } = req.body;
+    const { ids } = req.body;
     try {
-      const response = await TodoService.deleteSome(condition);
+      const response = await TodoService.deleteSome(ids);
       return res.json(response);
     } catch (error) {
       res.status(500).json(error.message);
