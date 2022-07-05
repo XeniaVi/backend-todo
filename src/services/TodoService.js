@@ -9,7 +9,7 @@ class TodoService {
 
   static async getAll(completed, offset, limit) {
     const query = !completed ? {} : { completed };
-    const count = await Todo.find(query).count();
+    const count = await Todo.countDocuments(query);
     let todos = await Todo.find(query).skip(offset).limit(limit);
     todos = todos.map((todo) => {
       todo = prepareTodoObject(todo);
@@ -17,7 +17,6 @@ class TodoService {
     });
     return { count, todos };
   }
-  S;
 
   static async update(post, id) {
     if (!id) throw new Error("Id doesn't exist");
