@@ -7,9 +7,10 @@ class TodoService {
     return prepareTodoObject(newTodo);
   }
 
-  static async getAll(offset, limit) {
-    const count = await Todo.find().count();
-    let todos = await Todo.find().skip(offset).limit(limit);
+  static async getAll(completed, offset, limit) {
+    const query = !completed ? {} : { completed };
+    const count = await Todo.find(query).count();
+    let todos = await Todo.find(query).skip(offset).limit(limit);
     todos = todos.map((todo) => {
       todo = prepareTodoObject(todo);
       return todo;
