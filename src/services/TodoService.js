@@ -7,13 +7,18 @@ class TodoService {
     return prepareTodoObject(newTodo);
   }
 
-  static async getAll() {
-    let todos = await Todo.find();
+  static async getByFilter(completed, offset, limit) {
+    const query = !completed ? {} : { completed };
+    const count = await Todo.countDocuments(query);
+    let todos = await Todo.find(query)
+      .sort({ timestamp: -1 })
+      .skip(offset)
+      .limit(limit);
     todos = todos.map((todo) => {
       todo = prepareTodoObject(todo);
       return todo;
     });
-    return todos;
+    return { count, todos };
   }
 
   static async update(post, id) {

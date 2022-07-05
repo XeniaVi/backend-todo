@@ -8,7 +8,7 @@ import {
 const router = new Router();
 
 router.post("/todos", validateNewTodo, TodoController.add);
-router.get("/todos", TodoController.getAll);
+router.get("/todos", TodoController.getByFilter);
 router.put("/todos/:id", validateUpdateTodo, TodoController.update);
 router.put("/todos", TodoController.updateSome);
 router.delete("/todos/:id", TodoController.delete);
