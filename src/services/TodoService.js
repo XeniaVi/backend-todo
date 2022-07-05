@@ -7,7 +7,7 @@ class TodoService {
     return prepareTodoObject(newTodo);
   }
 
-  static async getAll(completed, offset, limit) {
+  static async getByFilter(completed, offset, limit) {
     const query = !completed ? {} : { completed };
     const count = await Todo.countDocuments(query);
     let todos = await Todo.find(query)
