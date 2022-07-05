@@ -8,12 +8,13 @@ class TodoService {
   }
 
   static async getAll(offset, limit) {
+    const count = await Todo.find().count();
     let todos = await Todo.find().skip(offset).limit(limit);
     todos = todos.map((todo) => {
       todo = prepareTodoObject(todo);
       return todo;
     });
-    return todos;
+    return { count, todos };
   }
 
   static async update(post, id) {
