@@ -1,5 +1,6 @@
 import Todo from "../models/Todo.js";
 import { prepareTodoObject } from "../helpers/helper.js";
+import { ErrorWrongData } from "../errors/errors.js";
 
 class TodoService {
   static async add(todo) {
@@ -11,7 +12,7 @@ class TodoService {
     const query = !completed ? {} : { completed };
     const count = await Todo.countDocuments(query);
     let todos = await Todo.find(query)
-      .sort({ timestamp: -1 })
+      .sort({ createdAt: -1 })
       .skip(offset)
       .limit(limit);
     todos = todos.map((todo) => {
@@ -22,7 +23,8 @@ class TodoService {
   }
 
   static async update(post, id) {
-    if (!id) throw new Error("Id doesn't exist");
+    console.log(post);
+    if (!id) next(new ErrorWrongData("Post doesn't exist"));
     const updateTodo = await Todo.findByIdAndUpdate(id, post, {
       new: true,
     });
@@ -50,7 +52,7 @@ class TodoService {
   }
 
   static async delete(id) {
-    if (!id) throw new Error("Id doesn't exist");
+    if (!id) next(new ErrorWrongData("Post doesn't exist"));
     const todo = await Todo.findByIdAndDelete(id);
     return todo;
   }
