@@ -12,7 +12,6 @@ app.use(cors());
 app.use(express.json());
 app.use("/api", router);
 app.use((err, req, res, next) => {
-  console.log(err);
   if (err instanceof ErrorWrongData) {
     const response = { status: typeErrors.CLIENT_ERROR, message: err.message };
     res.status(typeErrors.CLIENT_ERROR).json(response);

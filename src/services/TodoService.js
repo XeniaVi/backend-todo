@@ -23,7 +23,6 @@ class TodoService {
   }
 
   static async update(post, id) {
-    console.log(post);
     if (!id) next(new ErrorWrongData("Post doesn't exist"));
     const updateTodo = await Todo.findByIdAndUpdate(id, post, {
       new: true,
