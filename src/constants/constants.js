@@ -1,0 +1,7 @@
+export const typeErrors = {
+  INFORMATIONAL: 100,
+  SUCCESS: 200,
+  REDIRECTION: 300,
+  CLIENT_ERROR: 400,
+  INTERNAL_SERVER_ERROR: 500,
+};
