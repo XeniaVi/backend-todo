@@ -23,7 +23,7 @@ class TodoService {
   }
 
   static async update(post, id) {
-    if (!id) next(new ErrorWrongData("Post doesn't exist"));
+    if (!id) throw new ErrorWrongData("Post doesn't exist");
     const updateTodo = await Todo.findByIdAndUpdate(id, post, {
       new: true,
     });
@@ -51,7 +51,7 @@ class TodoService {
   }
 
   static async delete(id) {
-    if (!id) next(new ErrorWrongData("Post doesn't exist"));
+    if (!id) throw new ErrorWrongData("Post doesn't exist");
     const todo = await Todo.findByIdAndDelete(id);
     return todo;
   }
