@@ -3,37 +3,31 @@ import mongoose from "mongoose";
 import router from "./routers/router";
 import { config } from "./config/config";
 import cors from "cors";
-// import { ErrorWrongData } from "./errors/errors.js";
-// import { typeErrors } from "./constants/constants.js";
+import { ErrorWrongData } from "./errors/errors";
+import { typeErrors } from "./constants/constants";
+import { Request, Response, NextFunction } from "express";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use("/api", router);
-// app.use(
-//   (
-//     err: Error,
-//     req: express.Request,
-//     res: express.Response,
-//     next: express.NextFunction
-//   ) => {
-//     if (err instanceof ErrorWrongData) {
-//       const response = {
-//         status: typeErrors.CLIENT_ERROR,
-//         message: err.message,
-//       };
-//       res.status(typeErrors.CLIENT_ERROR).json(response);
-//     } else {
-//       const response = {
-//         status: typeErrors.INTERNAL_SERVER_ERROR,
-//         message: "Server Error",
-//       };
-//       res.status(typeErrors.INTERNAL_SERVER_ERROR).json(response);
-//       next();
-//     }
-//   }
-// );
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  if (err instanceof ErrorWrongData) {
+    const response = {
+      status: typeErrors.CLIENT_ERROR,
+      message: err.message,
+    };
+    res.status(typeErrors.CLIENT_ERROR).json(response);
+  } else {
+    const response = {
+      status: typeErrors.INTERNAL_SERVER_ERROR,
+      message: "Server Error",
+    };
+    res.status(typeErrors.INTERNAL_SERVER_ERROR).json(response);
+    next();
+  }
+});
 
 async function startApp() {
   try {

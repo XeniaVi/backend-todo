@@ -6,7 +6,7 @@ import {
 } from "../types/types";
 import Todo from "../models/Todo";
 import { prepareTodoObject } from "../helpers/helper";
-//import { ErrorWrongData } from "../errors/errors.js";
+import { ErrorWrongData } from "../errors/errors";
 
 class TodoService {
   static async add(todo: IAddTodo) {
@@ -28,8 +28,7 @@ class TodoService {
   }
 
   static async update(post: IUpdateTodo, id: string) {
-    //if (!id) throw new ErrorWrongData("Post doesn't exist");
-    if (!id) throw new Error("Post doesn't exist");
+    if (!id) throw new ErrorWrongData("Post doesn't exist");
     const updateTodo = await Todo.findByIdAndUpdate(id, post, {
       new: true,
     });
@@ -56,8 +55,7 @@ class TodoService {
   }
 
   static async delete(id: string) {
-    //if (!id) throw new ErrorWrongData("Post doesn't exist");
-    if (!id) throw new Error("Post doesn't exist");
+    if (!id) throw new ErrorWrongData("Post doesn't exist");
     const todo = await Todo.findByIdAndDelete(id);
     return todo;
   }
