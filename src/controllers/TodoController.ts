@@ -57,19 +57,15 @@ class TodoController {
     }
   }
 
-  // static async deleteSome(
-  //   req: express.Request,
-  //   res: express.Response,
-  //   next: express.NextFunction
-  // ) {
-  //   const { ids } = req.body;
-  //   try {
-  //     const response = await TodoService.deleteSome(ids);
-  //     return res.json(response);
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // }
+  static async deleteSome(req: Request, res: Response, next: NextFunction) {
+    const { ids } = req.body;
+    try {
+      const response = await TodoService.deleteSome(ids);
+      return res.json(response);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default TodoController;

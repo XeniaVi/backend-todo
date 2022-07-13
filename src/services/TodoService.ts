@@ -6,7 +6,6 @@ import {
 } from "../types/types";
 import Todo from "../models/Todo";
 import { prepareTodoObject } from "../helpers/helper";
-import querystring from "querystring";
 //import { ErrorWrongData } from "../errors/errors.js";
 
 class TodoService {
@@ -63,12 +62,12 @@ class TodoService {
     return todo;
   }
 
-  //   static async deleteSome(ids) {
-  //     const response = await Todo.deleteMany({
-  //       _id: { $in: ids },
-  //     });
-  //     return response;
-  //   }
+  static async deleteSome(ids: Array<string>) {
+    const response = await Todo.deleteMany({
+      _id: { $in: ids },
+    });
+    return response;
+  }
 }
 
 export default TodoService;
