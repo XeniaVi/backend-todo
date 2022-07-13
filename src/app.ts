@@ -1,6 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
-// import router from "./routers/router.js";
+import router from "./routers/router";
 // import { config } from "./config/config.js";
 import cors from "cors";
 // import { ErrorWrongData } from "./errors/errors.js";
@@ -10,7 +10,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-// app.use("/api", router);
+app.use("/api", router);
 // app.use(
 //   (
 //     err: Error,
