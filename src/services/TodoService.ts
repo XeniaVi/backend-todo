@@ -56,11 +56,12 @@ class TodoService {
     return todos;
   }
 
-  //   static async delete(id) {
-  //     if (!id) throw new ErrorWrongData("Post doesn't exist");
-  //     const todo = await Todo.findByIdAndDelete(id);
-  //     return todo;
-  //   }
+  static async delete(id: string) {
+    //if (!id) throw new ErrorWrongData("Post doesn't exist");
+    if (!id) throw new Error("Post doesn't exist");
+    const todo = await Todo.findByIdAndDelete(id);
+    return todo;
+  }
 
   //   static async deleteSome(ids) {
   //     const response = await Todo.deleteMany({
