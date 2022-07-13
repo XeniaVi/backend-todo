@@ -1,12 +1,8 @@
 import TodoService from "../services/TodoService";
-import express from "express";
+import { Request, Response, NextFunction } from "express";
 
 class TodoController {
-  static async add(
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction
-  ) {
+  static async add(req: Request, res: Response, next: NextFunction) {
     try {
       const todo = await TodoService.add(req.body);
       return res.json(todo);
@@ -15,24 +11,24 @@ class TodoController {
     }
   }
 
-  // static async getByFilter(
-  //   req: express.Request,
-  //   res: express.Response,
-  //   next: express.NextFunction
-  // ) {
-  //   try {
-  //     const { offset, limit, completed } = req.query;
-  //     const todos = await TodoService.getByFilter(completed, offset, limit);
-  //     return res.json(todos);
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // }
+  static async getByFilter(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { offset, limit, completed } = req.query;
+      const todos = await TodoService.getByFilter(
+        completed as unknown as boolean,
+        offset as unknown as number,
+        limit as unknown as number
+      );
+      return res.json(todos);
+    } catch (error) {
+      next(error);
+    }
+  }
 
   // static async update(
-  //   req: express.Request,
-  //   res: express.Response,
-  //   next: express.NextFunction
+  //   req: Request,
+  //   res: Response,
+  //   next: NextFunction
   // ) {
   //   const post = req.body;
   //   const { id } = req.params;
@@ -46,9 +42,9 @@ class TodoController {
   // }
 
   // static async updateSome(
-  //   req: express.Request,
-  //   res: express.Response,
-  //   next: express.NextFunction
+  //   req: Request,
+  //   res: Response,
+  //   next: NextFunction
   // ) {
   //   const { completed, ids } = req.body;
   //   try {
@@ -60,9 +56,9 @@ class TodoController {
   // }
 
   // static async delete(
-  //   req: express.Request,
-  //   res: express.Response,
-  //   next: express.NextFunction
+  //   req: Request,
+  //   res: Response,
+  //   next: NextFunction
   // ) {
   //   const { id } = req.params;
   //   try {

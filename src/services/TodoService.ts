@@ -1,6 +1,7 @@
-import { IAddTodo, IGetDBTodo } from "../types/types";
+import { IAddTodo, IGetDBTodo, IPrepareTodo } from "../types/types";
 import Todo from "../models/Todo";
 import { prepareTodoObject } from "../helpers/helper";
+import querystring from "querystring";
 //import { ErrorWrongData } from "../errors/errors.js";
 
 class TodoService {
@@ -9,19 +10,19 @@ class TodoService {
     return prepareTodoObject(newTodo);
   }
 
-  //   static async getByFilter(completed, offset, limit) {
-  //     const query = !completed ? {} : { completed };
-  //     const count = await Todo.countDocuments(query);
-  //     let todos = await Todo.find(query)
-  //       .sort({ createdAt: -1 })
-  //       .skip(offset)
-  //       .limit(limit);
-  //     todos = todos.map((todo) => {
-  //       todo = prepareTodoObject(todo);
-  //       return todo;
-  //     });
-  //     return { count, todos };
-  //   }
+  static async getByFilter(completed: boolean, offset: number, limit: number) {
+    const query = !completed ? {} : { completed };
+    const count = await Todo.countDocuments(query);
+    let todos: Array<IGetDBTodo> | Array<IPrepareTodo> = await Todo.find(query)
+      .sort({ createdAt: -1 })
+      .skip(offset)
+      .limit(limit);
+    todos = todos.map((todo: IGetDBTodo) => {
+      const newTodo: IPrepareTodo = prepareTodoObject(todo);
+      return newTodo;
+    });
+    return { count, todos };
+  }
 
   //   static async update(post, id) {
   //     if (!id) throw new ErrorWrongData("Post doesn't exist");
