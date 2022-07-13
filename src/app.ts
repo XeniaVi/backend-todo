@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import router from "./routers/router";
-// import { config } from "./config/config.js";
+import { config } from "./config/config";
 import cors from "cors";
 // import { ErrorWrongData } from "./errors/errors.js";
 // import { typeErrors } from "./constants/constants.js";
@@ -37,10 +37,10 @@ app.use("/api", router);
 
 async function startApp() {
   try {
-    // mongoose.connect(config.DB_URL, {
-    //   //useUnifiedTopology: true,
-    //   //useNewUrlParser: true,
-    // });
+    mongoose.connect(config.DB_URL, {
+      //useUnifiedTopology: true,
+      //useNewUrlParser: true,
+    });
     app.listen(3000, () => console.log(`Server started on port ${3000}...`));
   } catch (e) {
     console.log(e);
