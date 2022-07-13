@@ -37,19 +37,15 @@ class TodoController {
     }
   }
 
-  // static async updateSome(
-  //   req: Request,
-  //   res: Response,
-  //   next: NextFunction
-  // ) {
-  //   const { completed, ids } = req.body;
-  //   try {
-  //     const todos = await TodoService.updateSome(completed, ids);
-  //     return res.json(todos);
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // }
+  static async updateSome(req: Request, res: Response, next: NextFunction) {
+    const { completed, ids } = req.body;
+    try {
+      const todos = await TodoService.updateSome(completed, ids);
+      return res.json(todos);
+    } catch (error) {
+      next(error);
+    }
+  }
 
   // static async delete(
   //   req: Request,

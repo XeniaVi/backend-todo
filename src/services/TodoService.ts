@@ -23,8 +23,7 @@ class TodoService {
       .skip(offset)
       .limit(limit);
     todos = todos.map((todo: IGetDBTodo) => {
-      const newTodo: IPrepareTodo = prepareTodoObject(todo);
-      return newTodo;
+      return prepareTodoObject(todo);
     });
     return { count, todos };
   }
@@ -39,24 +38,23 @@ class TodoService {
     return prepareTodoObject(updateTodo);
   }
 
-  //   static async updateSome(completed, ids) {
-  //     await Todo.updateMany(
-  //       {
-  //         _id: { $in: ids },
-  //       },
-  //       { $set: { completed } }
-  //     );
+  static async updateSome(completed: boolean, ids: Array<string>) {
+    await Todo.updateMany(
+      {
+        _id: { $in: ids },
+      },
+      { $set: { completed } }
+    );
 
-  //     let updatedTodos = await Todo.find({
-  //       _id: { $in: ids },
-  //     });
+    const updatedTodos: Array<IGetDBTodo> = await Todo.find({
+      _id: { $in: ids },
+    });
 
-  //     updatedTodos = updatedTodos.map((todo) => {
-  //       todo = prepareTodoObject(todo);
-  //       return todo;
-  //     });
-  //     return updatedTodos;
-  //   }
+    const todos: Array<IPrepareTodo> = updatedTodos.map((todo: IGetDBTodo) => {
+      return prepareTodoObject(todo);
+    });
+    return todos;
+  }
 
   //   static async delete(id) {
   //     if (!id) throw new ErrorWrongData("Post doesn't exist");
