@@ -1,4 +1,9 @@
-import { IAddTodo, IGetDBTodo, IPrepareTodo } from "../types/types";
+import {
+  IAddTodo,
+  IGetDBTodo,
+  IPrepareTodo,
+  IUpdateTodo,
+} from "../types/types";
 import Todo from "../models/Todo";
 import { prepareTodoObject } from "../helpers/helper";
 import querystring from "querystring";
@@ -24,14 +29,15 @@ class TodoService {
     return { count, todos };
   }
 
-  //   static async update(post, id) {
-  //     if (!id) throw new ErrorWrongData("Post doesn't exist");
-  //     const updateTodo = await Todo.findByIdAndUpdate(id, post, {
-  //       new: true,
-  //     });
+  static async update(post: IUpdateTodo, id: string) {
+    //if (!id) throw new ErrorWrongData("Post doesn't exist");
+    if (!id) throw new Error("Post doesn't exist");
+    const updateTodo = await Todo.findByIdAndUpdate(id, post, {
+      new: true,
+    });
 
-  //     return prepareTodoObject(updateTodo);
-  //   }
+    return prepareTodoObject(updateTodo);
+  }
 
   //   static async updateSome(completed, ids) {
   //     await Todo.updateMany(
