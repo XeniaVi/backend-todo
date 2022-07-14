@@ -1,12 +1,12 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, response } from "express";
 import AuthService from "../services/AuthService";
-import Role from "../models/Role";
-import User from "../models/User";
 
 class AuthController {
   static async registration(req: Request, res: Response, next: NextFunction) {
     try {
-      return res.json({});
+      const { username, password } = req.body;
+      const response = await AuthService.registration(username, password);
+      return res.json(response);
     } catch (error) {
       next(error);
     }
