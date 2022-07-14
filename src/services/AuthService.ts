@@ -12,9 +12,15 @@ class AuthService {
     const hashPassword = bcript.hashSync(password, 7);
     const userRole = await Role.findOne({ value: "USER" });
 
-    if (userRole) throw new ErrorWrongData("Unabled to create user");
+    console.log(userRole);
 
-    const user = new User({ username, password: hashPassword, roles: [] });
+    if (!userRole) throw new ErrorWrongData("Unabled to create user");
+
+    const user = new User({
+      username,
+      password: hashPassword,
+      roles: [userRole],
+    });
     await user.save();
 
     return { message: "User successfully created" };
@@ -24,6 +30,16 @@ class AuthService {
     const newRole = new Role({ value: role });
     await newRole.save();
     return {};
+  }
+
+  static async getUsers() {
+    const users = await User.find();
+    return users;
+  }
+
+  static async getRoles() {
+    const users = await Role.find();
+    return users;
   }
 }
 

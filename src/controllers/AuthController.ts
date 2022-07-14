@@ -21,6 +21,24 @@ class AuthController {
       next(error);
     }
   }
+
+  static async getUsers(req: Request, res: Response, next: NextFunction) {
+    try {
+      const response = await AuthService.getUsers();
+      return res.json(response);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async getRoles(req: Request, res: Response, next: NextFunction) {
+    try {
+      const response = await AuthService.getRoles();
+      return res.json(response);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default AuthController;
