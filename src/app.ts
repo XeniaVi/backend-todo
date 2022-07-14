@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose, { ConnectOptions } from "mongoose";
-import router from "./routers/router";
+import todoRouter from "./routers/todoRouter";
+import authRouter from "./routers/authRouter";
 import { config } from "./config/config";
 import cors from "cors";
 import { ErrorWrongData } from "./errors/errors";
@@ -11,7 +12,8 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use("/api", router);
+app.use("/api", todoRouter);
+app.use("/auth", authRouter);
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof ErrorWrongData) {
     const response = {
