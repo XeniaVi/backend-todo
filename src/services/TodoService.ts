@@ -1,33 +1,26 @@
-import {
-  IAddTodo,
-  IGetDBTodo,
-  IPrepareTodo,
-  IUpdateTodo,
-} from "../types/types";
+import { TodoNew, TodoDB, TodoPrepared, TodoUpdate } from "../types/types";
 import Todo from "../models/Todo";
 import { prepareTodoObject } from "../helpers/helper";
 import { ErrorWrongData } from "../errors/errors";
 
 class TodoService {
-  static async add(todo: IAddTodo) {
-    const newTodo: IGetDBTodo = await Todo.create(todo);
+  static async add(todo: TodoNew) {
+    const newTodo: TodoDB = await Todo.create(todo);
     return prepareTodoObject(newTodo);
   }
 
   static async getByFilter(completed: boolean, offset: number, limit: number) {
     const query = !completed ? {} : { completed };
     const count = await Todo.countDocuments(query);
-    let todos: Array<IGetDBTodo> | Array<IPrepareTodo> = await Todo.find(query)
+    let todos: Array<TodoDB> | Array<TodoPrepared> = await Todo.find(query)
       .sort({ createdAt: -1 })
       .skip(offset)
       .limit(limit);
-    todos = todos.map((todo: IGetDBTodo) => {
-      return prepareTodoObject(todo);
-    });
+    todos = todos.map((todo: TodoDB) => prepareTodoObject(todo));
     return { count, todos };
   }
 
-  static async update(post: IUpdateTodo, id: string) {
+  static async update(post: TodoUpdate, id: string) {
     if (!id) throw new ErrorWrongData("Post doesn't exist");
     const updateTodo = await Todo.findByIdAndUpdate(id, post, {
       new: true,
@@ -44,20 +37,18 @@ class TodoService {
       { $set: { completed } }
     );
 
-    const updatedTodos: Array<IGetDBTodo> = await Todo.find({
+    const updatedTodos: Array<TodoDB> = await Todo.find({
       _id: { $in: ids },
     });
 
-    const todos: Array<IPrepareTodo> = updatedTodos.map((todo: IGetDBTodo) => {
-      return prepareTodoObject(todo);
-    });
+    const todos: Array<TodoPrepared> = updatedTodos.map((todo: TodoDB) => prepareTodoObject(todo));
     return todos;
   }
 
   static async delete(id: string) {
     if (!id) throw new ErrorWrongData("Post doesn't exist");
-    const todo = await Todo.findByIdAndDelete(id);
-    return todo;
+    await Todo.findByIdAndDelete(id);
+    return {};
   }
 
   static async deleteSome(ids: Array<string>) {

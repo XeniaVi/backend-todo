@@ -1,5 +1,5 @@
 import express from "express";
-import mongoose from "mongoose";
+import mongoose, { ConnectOptions } from "mongoose";
 import router from "./routers/router";
 import { config } from "./config/config";
 import cors from "cors";
@@ -32,11 +32,11 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 async function startApp() {
   try {
     mongoose.connect(config.DB_URL, {
-      //useUnifiedTopology: true,
-      //useNewUrlParser: true,
-    });
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+    } as ConnectOptions);
     app.listen(config.PORT, () =>
-      console.log(`Server started on port ${config.PORT}...`)
+      console.log(`Server started on port ${config.PORT}`)
     );
   } catch (e) {
     console.log(e);

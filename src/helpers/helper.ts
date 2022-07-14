@@ -1,7 +1,6 @@
-import { IGetDBTodo } from "../types/types";
+import { TodoDB } from "../types/types";
 
-export const prepareTodoObject = (item: IGetDBTodo) => {
-  //const objectItem = item.toJSON();
+export const prepareTodoObject = (item: TodoDB) => {
   const { _id, value, completed, createdAt } = item;
   return {
     id: _id.toString(),

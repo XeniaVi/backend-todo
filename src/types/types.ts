@@ -1,27 +1,27 @@
 import { Types } from "mongoose";
 
-export interface IAddTodo {
+export type TodoNew = {
   value: string;
   completed: boolean;
   createdAt: number;
-}
+};
 
-export interface IUpdateTodo {
+export type TodoUpdate = {
   value?: string;
   completed?: boolean;
-}
+};
 
-export interface IGetDBTodo {
+export type TodoDB = {
   _id: Types.ObjectId;
   value: string;
   completed: boolean;
   createdAt: number;
   __v?: number;
-}
+};
 
-export interface IPrepareTodo {
+export type TodoPrepared = {
   id: string;
   value: string;
   completed: boolean;
   createdAt: number;
-}
+};
