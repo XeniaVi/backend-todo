@@ -25,3 +25,11 @@ export type TodoPrepared = {
   completed: boolean;
   createdAt: number;
 };
+
+export type UserDB = {
+  _id: Types.ObjectId;
+  username: string;
+  password: string;
+  roles?: Array<string>;
+  __v?: number;
+};

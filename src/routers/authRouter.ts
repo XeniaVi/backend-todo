@@ -13,6 +13,7 @@ router.post(
   ).isLength({ min: 5, max: 14 }),
   AuthController.registration
 );
+router.post("/login", AuthController.login);
 router.post("/role", AuthController.makeRole);
 router.get("/users", AuthController.getUsers);
 router.get("/roles", AuthController.getRoles);

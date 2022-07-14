@@ -17,6 +17,16 @@ class AuthController {
     }
   }
 
+  static async login(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { username, password } = req.body;
+      const response = await AuthService.login(username, password);
+      return res.json(response);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async makeRole(req: Request, res: Response, next: NextFunction) {
     try {
       const { role } = req.body;

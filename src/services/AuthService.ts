@@ -2,6 +2,8 @@ import Role from "../models/Role";
 import User from "../models/User";
 import { ErrorWrongData } from "../errors/errors";
 import bcript from "bcryptjs";
+import { UserDB } from "../types/types";
+import { prepareUserObject, generateAccessToken } from "../helpers/helper";
 
 class AuthService {
   static async registration(username: string, password: string) {
@@ -24,6 +26,18 @@ class AuthService {
     await user.save();
 
     return { message: "User successfully created" };
+  }
+
+  static async login(username: string, password: string) {
+    let users: Array<UserDB> = await User.find({ username });
+    const user = prepareUserObject(users[0]);
+    if (!user) throw new ErrorWrongData(`User ${username} not found`);
+
+    const validPassword = bcript.compareSync(password, user.password);
+    if (!validPassword) throw new ErrorWrongData(`Password is wrong`);
+
+    const token = generateAccessToken(user.id, user.roles);
+    return { token };
   }
 
   static async makeRole(role: string) {
