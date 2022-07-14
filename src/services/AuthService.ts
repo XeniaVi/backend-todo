@@ -14,8 +14,6 @@ class AuthService {
     const hashPassword = bcript.hashSync(password, 7);
     const userRole = await Role.findOne({ value: "USER" });
 
-    console.log(userRole);
-
     if (!userRole) throw new ErrorWrongData("Unabled to create user");
 
     const user = new User({
@@ -36,7 +34,7 @@ class AuthService {
     const validPassword = bcript.compareSync(password, user.password);
     if (!validPassword) throw new ErrorWrongData(`Password is wrong`);
 
-    const token = generateAccessToken(user.id, user.roles);
+    const token = generateAccessToken(user.id, user.username);
     return { token };
   }
 

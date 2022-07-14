@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { AuthMiddleware } from "../middleware/AuthMiddleware";
 import TodoController from "../controllers/TodoController";
 import {
   validateNewTodo,
@@ -7,11 +8,16 @@ import {
 
 const router = Router();
 
-router.post("/todos", validateNewTodo, TodoController.add);
-router.get("/todos", TodoController.getByFilter);
-router.put("/todos/:id", validateUpdateTodo, TodoController.update);
-router.put("/todos", TodoController.updateSome);
-router.delete("/todos/:id", TodoController.delete);
-router.delete("/todos/", TodoController.deleteSome);
+router.post("/todos", AuthMiddleware, validateNewTodo, TodoController.add);
+router.get("/todos", AuthMiddleware, TodoController.getByFilter);
+router.put(
+  "/todos/:id",
+  AuthMiddleware,
+  validateUpdateTodo,
+  TodoController.update
+);
+router.put("/todos", AuthMiddleware, TodoController.updateSome);
+router.delete("/todos/:id", AuthMiddleware, TodoController.delete);
+router.delete("/todos/", AuthMiddleware, TodoController.deleteSome);
 
 export default router;

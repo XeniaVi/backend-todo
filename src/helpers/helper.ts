@@ -22,10 +22,10 @@ export const prepareUserObject = (item: UserDB) => {
   };
 };
 
-export const generateAccessToken = (id: string, roles: Array<string>) => {
+export const generateAccessToken = (id: string, username: string) => {
   const payload = {
     id,
-    roles,
+    username,
   };
 
   return jwt.sign(payload, config.SECRET_KEY, { expiresIn: "24h" });

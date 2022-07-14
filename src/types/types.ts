@@ -1,4 +1,6 @@
 import { Types } from "mongoose";
+import { Request } from "express";
+import { JwtPayload } from "jsonwebtoken";
 
 export type TodoNew = {
   value: string;
@@ -33,3 +35,7 @@ export type UserDB = {
   roles?: Array<string>;
   __v?: number;
 };
+
+export interface UserExtendedRequest extends Request {
+  user: JwtPayload | string;
+}
