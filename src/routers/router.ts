@@ -1,11 +1,11 @@
 import { Router } from "express";
-import TodoController from "../controllers/TodoController.js";
+import TodoController from "../controllers/TodoController";
 import {
   validateNewTodo,
   validateUpdateTodo,
-} from "../validators/todoValidators.js";
+} from "../validators/todoValidators";
 
-const router = new Router();
+const router = Router();
 
 router.post("/todos", validateNewTodo, TodoController.add);
 router.get("/todos", TodoController.getByFilter);

@@ -1,7 +1,8 @@
-import TodoService from "../services/TodoService.js";
+import TodoService from "../services/TodoService";
+import { Request, Response, NextFunction } from "express";
 
 class TodoController {
-  static async add(req, res, next) {
+  static async add(req: Request, res: Response, next: NextFunction) {
     try {
       const todo = await TodoService.add(req.body);
       return res.json(todo);
@@ -10,17 +11,21 @@ class TodoController {
     }
   }
 
-  static async getByFilter(req, res, next) {
+  static async getByFilter(req: Request, res: Response, next: NextFunction) {
     try {
       const { offset, limit, completed } = req.query;
-      const todos = await TodoService.getByFilter(completed, offset, limit);
+      const todos = await TodoService.getByFilter(
+        completed as unknown as boolean,
+        offset as unknown as number,
+        limit as unknown as number
+      );
       return res.json(todos);
     } catch (error) {
       next(error);
     }
   }
 
-  static async update(req, res, next) {
+  static async update(req: Request, res: Response, next: NextFunction) {
     const post = req.body;
     const { id } = req.params;
 
@@ -32,7 +37,7 @@ class TodoController {
     }
   }
 
-  static async updateSome(req, res, next) {
+  static async updateSome(req: Request, res: Response, next: NextFunction) {
     const { completed, ids } = req.body;
     try {
       const todos = await TodoService.updateSome(completed, ids);
@@ -42,7 +47,7 @@ class TodoController {
     }
   }
 
-  static async delete(req, res, next) {
+  static async delete(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
     try {
       const todo = await TodoService.delete(id);
@@ -52,7 +57,7 @@ class TodoController {
     }
   }
 
-  static async deleteSome(req, res, next) {
+  static async deleteSome(req: Request, res: Response, next: NextFunction) {
     const { ids } = req.body;
     try {
       const response = await TodoService.deleteSome(ids);

@@ -1,6 +1,11 @@
-import { ErrorWrongData } from "../errors/errors.js";
+import { ErrorWrongData } from "../errors/errors";
+import { Request, Response, NextFunction } from "express";
 
-export const validateNewTodo = (req, res, next) => {
+export const validateNewTodo = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { value, completed } = req.body;
 
   if (!value || typeof value !== "string" || typeof completed !== "boolean") {
@@ -11,7 +16,11 @@ export const validateNewTodo = (req, res, next) => {
   next();
 };
 
-export const validateUpdateTodo = (req, res, next) => {
+export const validateUpdateTodo = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { value, completed } = req.body;
 
   if (value === undefined && completed === undefined) {
