@@ -1,14 +1,9 @@
-import { Request, Response, NextFunction, response } from "express";
-import AuthService from "../services/AuthService";
-import { validationResult } from "express-validator";
-import { ErrorWrongData } from "../errors/errors";
+import { Request, Response, NextFunction } from "express";
+import { AuthService } from "../services";
 
 class AuthController {
   static async registration(req: Request, res: Response, next: NextFunction) {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) throw new ErrorWrongData("Error registration");
-
       const { username, password } = req.body;
       const response = await AuthService.registration(username, password);
       return res.json(response);

@@ -32,10 +32,14 @@ export type UserDB = {
   _id: Types.ObjectId;
   username: string;
   password: string;
-  roles?: Array<string>;
   __v?: number;
 };
 
 export interface UserExtendedRequest extends Request {
   user: JwtPayload | string;
 }
+
+export type PayloadForGenerateToken = {
+  id?: string;
+  username?: string;
+};

@@ -1,7 +1,7 @@
-import { TodoNew, TodoDB, TodoPrepared, TodoUpdate } from "../types/types";
-import Todo from "../models/Todo";
-import { prepareTodoObject } from "../helpers/helper";
-import { ErrorWrongData } from "../errors/errors";
+import { TodoNew, TodoDB, TodoPrepared, TodoUpdate } from "../types";
+import { Todo } from "../models";
+import { prepareTodoObject } from "../helpers";
+import { ErrorWrongData } from "../errors";
 
 class TodoService {
   static async add(todo: TodoNew) {
@@ -41,7 +41,9 @@ class TodoService {
       _id: { $in: ids },
     });
 
-    const todos: Array<TodoPrepared> = updatedTodos.map((todo: TodoDB) => prepareTodoObject(todo));
+    const todos: Array<TodoPrepared> = updatedTodos.map((todo: TodoDB) =>
+      prepareTodoObject(todo)
+    );
     return todos;
   }
 

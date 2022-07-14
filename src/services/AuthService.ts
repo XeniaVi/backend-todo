@@ -1,29 +1,33 @@
-import Role from "../models/Role";
-import User from "../models/User";
-import { ErrorWrongData } from "../errors/errors";
+import { Role } from "../models";
+import { User } from "../models";
+import { ErrorWrongData } from "../errors";
 import bcript from "bcryptjs";
-import { UserDB } from "../types/types";
-import { prepareUserObject, generateAccessToken } from "../helpers/helper";
+import { UserDB } from "../types";
+import { prepareUserObject, generateAccessToken } from "../helpers";
+import { nextTick } from "process";
 
 class AuthService {
   static async registration(username: string, password: string) {
-    const res = await User.findOne({ username });
+    try {
+      const res = await User.findOne({ username });
 
-    if (res) throw new ErrorWrongData("User already exists");
+      if (res) throw new ErrorWrongData("User already exists");
 
-    const hashPassword = bcript.hashSync(password, 7);
-    const userRole = await Role.findOne({ value: "USER" });
+      const hashPassword = bcript.hashSync(password, 7);
+      const userRole = await Role.findOne({ value: "USER" });
 
-    if (!userRole) throw new ErrorWrongData("Unabled to create user");
+      if (!userRole) throw new ErrorWrongData("Unabled to create user");
 
-    const user = new User({
-      username,
-      password: hashPassword,
-      roles: [userRole],
-    });
-    await user.save();
+      const user = new User({
+        username,
+        password: hashPassword,
+      });
+      await user.save();
 
-    return { message: "User successfully created" };
+      return { message: "User successfully created" };
+    } catch (error) {
+      return { message: error.message };
+    }
   }
 
   static async login(username: string, password: string) {
@@ -34,7 +38,12 @@ class AuthService {
     const validPassword = bcript.compareSync(password, user.password);
     if (!validPassword) throw new ErrorWrongData(`Password is wrong`);
 
-    const token = generateAccessToken(user.id, user.username);
+    const payload = {
+      id: user.id,
+      user: user.username,
+    };
+
+    const token = generateAccessToken(payload);
     return { token };
   }
 

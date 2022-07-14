@@ -1,4 +1,4 @@
-import { TodoDB, UserDB } from "../types/types";
+import { PayloadForGenerateToken, TodoDB, UserDB } from "../types";
 import jwt from "jsonwebtoken";
 import { config } from "../config/config";
 
@@ -13,20 +13,14 @@ export const prepareTodoObject = (item: TodoDB) => {
 };
 
 export const prepareUserObject = (item: UserDB) => {
-  const { _id, username, password, roles } = item;
+  const { _id, username, password } = item;
   return {
     id: _id.toString(),
     username,
     password,
-    roles,
   };
 };
 
-export const generateAccessToken = (id: string, username: string) => {
-  const payload = {
-    id,
-    username,
-  };
-
-  return jwt.sign(payload, config.SECRET_KEY, { expiresIn: "24h" });
+export const generateAccessToken = (payload: PayloadForGenerateToken) => {
+  return jwt.sign(payload, config.SECRET_KEY, { expiresIn: config.EXPIRES_IN });
 };

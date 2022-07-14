@@ -1,28 +1,21 @@
-import { ErrorWrongData } from "../errors/errors";
+import { ErrorWrongData } from "../errors";
 import { Request, Response, NextFunction } from "express";
 
-export const validateRegistrationUsename = (
+export const validateRegistration = (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const { username } = req.body;
+  const { username, password } = req.body;
 
   if (!username) {
     next(new ErrorWrongData("Username must not be empty"));
   }
 
-  next();
-};
+  const min = 4;
+  const max = 15;
 
-export const validateRegistrationPassword = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const { password } = req.body;
-
-  if (password.length < 4 || password.length > 15) {
+  if (password.length < min || password.length > max) {
     next(
       new ErrorWrongData(
         "Password's length must be more than 4 and less than 15"

@@ -1,21 +1,16 @@
 import { Router } from "express";
-import AuthController from "../controllers/AuthController";
+import { AuthController } from "../controllers";
 import {
-  validateRegistrationUsename,
-  validateRegistrationPassword,
-} from "../validators/authValidators";
+  validateRegistration,
+} from "../validators";
 
 const router = Router();
 
 router.post(
   "/registration",
-  validateRegistrationUsename,
-  validateRegistrationPassword,
+  validateRegistration,
   AuthController.registration
 );
 router.post("/login", AuthController.login);
-router.post("/role", AuthController.makeRole);
-router.get("/users", AuthController.getUsers);
-router.get("/roles", AuthController.getRoles);
 
 export default router;

@@ -1,4 +1,4 @@
-import TodoService from "../services/TodoService";
+import { TodoService } from "../services";
 import { Request, Response, NextFunction } from "express";
 
 class TodoController {

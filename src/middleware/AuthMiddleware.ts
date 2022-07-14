@@ -1,8 +1,8 @@
 import { Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { UserExtendedRequest } from "../types/types";
+import { UserExtendedRequest } from "../types";
 import { config } from "../config/config";
-import { ErrorWrongData } from "../errors/errors";
+import { ErrorWrongData } from "../errors";
 
 export const AuthMiddleware = (
   req: UserExtendedRequest,

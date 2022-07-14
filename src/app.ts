@@ -1,11 +1,10 @@
 import express from "express";
 import mongoose, { ConnectOptions } from "mongoose";
-import todoRouter from "./routers/todoRouter";
-import authRouter from "./routers/authRouter";
+import { todoRouter, authRouter } from "./routers";
 import { config } from "./config/config";
 import cors from "cors";
-import { ErrorWrongData } from "./errors/errors";
-import { typeErrors } from "./constants/constants";
+import { ErrorWrongData } from "./errors";
+import { typeErrors } from "./constants";
 import { Request, Response, NextFunction } from "express";
 
 const app = express();
