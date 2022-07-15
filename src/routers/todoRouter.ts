@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { AuthMiddleware } from "../middleware";
+import { AuthMiddleware } from "../middlewares";
 import { TodoController } from "../controllers";
 import { validateNewTodo, validateUpdateTodo } from "../validators";
 

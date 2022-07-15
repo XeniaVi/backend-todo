@@ -13,6 +13,8 @@ app.use(express.json());
 app.use("/api", todoRouter);
 app.use("/auth", authRouter);
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.error(`=== [APPLICATION] ERROR: ${err.message} ===`);
+
   if (err instanceof ErrorWrongData) {
     const response = {
       status: typeErrors.CLIENT_ERROR,

@@ -1,5 +1,4 @@
-import { Role } from "../models";
-import { User } from "../models";
+import { Role, User } from "../models";
 import { ErrorWrongData } from "../errors";
 import bcript from "bcryptjs";
 import { UserDB } from "../types";
@@ -8,26 +7,22 @@ import { lengthPassword } from "../constants";
 
 export class AuthService {
   static async registration(username: string, password: string) {
-    try {
-      const res = await User.findOne({ username });
+    const res = await User.findOne({ username });
 
-      if (res) throw new ErrorWrongData("User already exists");
+    if (res) throw new ErrorWrongData("User already exists");
 
-      const hashPassword = bcript.hashSync(password, lengthPassword);
-      const userRole = await Role.findOne({ value: "USER" });
+    const hashPassword = bcript.hashSync(password, lengthPassword);
+    const userRole = await Role.findOne({ value: "USER" });
 
-      if (!userRole) throw new ErrorWrongData("Unabled to create user");
+    if (!userRole) throw new ErrorWrongData("Unabled to create user");
 
-      const user = new User({
-        username,
-        password: hashPassword,
-      });
-      await user.save();
+    const user = new User({
+      username,
+      password: hashPassword,
+    });
+    await user.save();
 
-      return { message: "User successfully created" };
-    } catch (error) {
-      return { message: error.message };
-    }
+    return { message: "User successfully created" };
   }
 
   static async login(username: string, password: string) {
