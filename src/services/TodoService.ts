@@ -1,4 +1,4 @@
-import { TodoNew, TodoDB, TodoPrepared, TodoUpdate } from "../types";
+import { TodoNew, TodoDB, TodoPrepared, TodoUpdate, UserReq } from "../types";
 import { Todo } from "../models";
 import { prepareTodoObject } from "../helpers";
 import { ErrorWrongData } from "../errors";
@@ -9,8 +9,16 @@ export class TodoService {
     return prepareTodoObject(newTodo);
   }
 
-  static async getByFilter(completed: boolean, offset: number, limit: number) {
-    const query = !completed ? {} : { completed };
+  static async getByFilter(
+    completed: boolean,
+    offset: number,
+    limit: number,
+    user: UserReq
+  ) {
+    const query = !completed
+      ? { user_id: user.id }
+      : { completed, user_id: user.id };
+    console.log(query);
     const count = await Todo.countDocuments(query);
     let todos: Array<TodoDB> | Array<TodoPrepared> = await Todo.find(query)
       .sort({ createdAt: -1 })

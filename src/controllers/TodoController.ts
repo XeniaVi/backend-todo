@@ -1,5 +1,6 @@
 import { TodoService } from "../services";
 import { Request, Response, NextFunction } from "express";
+import { UserReq, UserExtendedRequest } from "../types";
 
 export class TodoController {
   static async add(req: Request, res: Response, next: NextFunction) {
@@ -11,13 +12,19 @@ export class TodoController {
     }
   }
 
-  static async getByFilter(req: Request, res: Response, next: NextFunction) {
+  static async getByFilter(
+    req: UserExtendedRequest,
+    res: Response,
+    next: NextFunction
+  ) {
     try {
       const { offset, limit, completed } = req.query;
+      const { user } = req;
       const todos = await TodoService.getByFilter(
         completed as unknown as boolean,
         offset as unknown as number,
-        limit as unknown as number
+        limit as unknown as number,
+        user as unknown as UserReq
       );
       return res.json(todos);
     } catch (error) {

@@ -52,3 +52,10 @@ export type PayloadForGenerateToken = {
   id?: string;
   username?: string;
 };
+
+export type UserReq = {
+  id: string;
+  user: string;
+  iat: number;
+  exp: number;
+};
