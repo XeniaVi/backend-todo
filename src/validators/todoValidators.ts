@@ -1,4 +1,4 @@
-import { ErrorWrongData } from "../errors/errors";
+import { ErrorWrongData } from "../errors";
 import { Request, Response, NextFunction } from "express";
 
 export const validateNewTodo = (
