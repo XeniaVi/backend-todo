@@ -4,8 +4,16 @@ import { prepareTodoObject } from "../helpers";
 import { ErrorWrongData } from "../errors";
 
 export class TodoService {
-  static async add(todo: TodoNew) {
-    const newTodo: TodoDB = await Todo.create(todo);
+  static async add(todo: TodoNew, user: UserReq) {
+    const { value, completed, createdAt } = todo;
+    const { id } = user;
+    const sendTodo: TodoNew = {
+      value,
+      completed,
+      createdAt,
+      user_id: id,
+    };
+    const newTodo: TodoDB = await Todo.create(sendTodo);
     return prepareTodoObject(newTodo);
   }
 
@@ -18,7 +26,6 @@ export class TodoService {
     const query = !completed
       ? { user_id: user.id }
       : { completed, user_id: user.id };
-    console.log(query);
     const count = await Todo.countDocuments(query);
     let todos: Array<TodoDB> | Array<TodoPrepared> = await Todo.find(query)
       .sort({ createdAt: -1 })

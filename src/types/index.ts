@@ -6,6 +6,7 @@ export type TodoNew = {
   value: string;
   completed: boolean;
   createdAt: number;
+  user_id: string;
 };
 
 export type TodoUpdate = {
@@ -49,7 +50,7 @@ export interface UserExtendedRequest extends Request {
 }
 
 export type PayloadForGenerateToken = {
-  id?: string;
+  id: string;
   username?: string;
 };
 
