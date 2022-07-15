@@ -1,7 +1,7 @@
 import { TodoService } from "../services";
 import { Request, Response, NextFunction } from "express";
 
-class TodoController {
+export class TodoController {
   static async add(req: Request, res: Response, next: NextFunction) {
     try {
       const todo = await TodoService.add(req.body);
@@ -67,5 +67,3 @@ class TodoController {
     }
   }
 }
-
-export default TodoController;

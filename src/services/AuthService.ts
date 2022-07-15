@@ -4,16 +4,16 @@ import { ErrorWrongData } from "../errors";
 import bcript from "bcryptjs";
 import { UserDB } from "../types";
 import { prepareUserObject, generateAccessToken } from "../helpers";
-import { nextTick } from "process";
+import { lengthPassword } from "../constants";
 
-class AuthService {
+export class AuthService {
   static async registration(username: string, password: string) {
     try {
       const res = await User.findOne({ username });
 
       if (res) throw new ErrorWrongData("User already exists");
 
-      const hashPassword = bcript.hashSync(password, 7);
+      const hashPassword = bcript.hashSync(password, lengthPassword);
       const userRole = await Role.findOne({ value: "USER" });
 
       if (!userRole) throw new ErrorWrongData("Unabled to create user");
@@ -31,7 +31,7 @@ class AuthService {
   }
 
   static async login(username: string, password: string) {
-    let users: Array<UserDB> = await User.find({ username });
+    const users: Array<UserDB> = await User.find({ username });
     const user = prepareUserObject(users[0]);
     if (!user) throw new ErrorWrongData(`User ${username} not found`);
 
@@ -43,8 +43,7 @@ class AuthService {
       user: user.username,
     };
 
-    const token = generateAccessToken(payload);
-    return { token };
+    return generateAccessToken(payload);
   }
 
   static async makeRole(role: string) {
@@ -57,11 +56,4 @@ class AuthService {
     const users = await User.find();
     return users;
   }
-
-  static async getRoles() {
-    const users = await Role.find();
-    return users;
-  }
 }
-
-export default AuthService;

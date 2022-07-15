@@ -1,5 +1,3 @@
-import Role from "./Role";
-import User from "./User";
-import Todo from "./Todo";
-
-export { Role, User, Todo };
+export * from "./Role";
+export * from "./User";
+export * from "./Todo";

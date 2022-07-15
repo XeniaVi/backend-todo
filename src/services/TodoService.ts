@@ -3,7 +3,7 @@ import { Todo } from "../models";
 import { prepareTodoObject } from "../helpers";
 import { ErrorWrongData } from "../errors";
 
-class TodoService {
+export class TodoService {
   static async add(todo: TodoNew) {
     const newTodo: TodoDB = await Todo.create(todo);
     return prepareTodoObject(newTodo);

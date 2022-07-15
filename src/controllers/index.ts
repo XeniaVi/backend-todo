@@ -1,4 +1,2 @@
-import AuthController from "../controllers/AuthController";
-import TodoController from "../controllers/TodoController";
-
-export { AuthController, TodoController };
+export * from "../controllers/AuthController";
+export * from "../controllers/TodoController";

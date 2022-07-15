@@ -1,5 +1,6 @@
 import { ErrorWrongData } from "../errors";
 import { Request, Response, NextFunction } from "express";
+import { minLengthPassword, maxLengthPassword } from "../constants";
 
 export const validateRegistration = (
   req: Request,
@@ -12,13 +13,13 @@ export const validateRegistration = (
     next(new ErrorWrongData("Username must not be empty"));
   }
 
-  const min = 4;
-  const max = 15;
-
-  if (password.length < min || password.length > max) {
+  if (
+    password.length < minLengthPassword ||
+    password.length > maxLengthPassword
+  ) {
     next(
       new ErrorWrongData(
-        "Password's length must be more than 4 and less than 15"
+        `Password's length must be more than ${minLengthPassword} and less than ${maxLengthPassword}`
       )
     );
   }

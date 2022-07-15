@@ -1,4 +1,2 @@
-import AuthService from "./AuthService";
-import TodoService from "./TodoService";
-
-export { AuthService, TodoService };
+export * from "./AuthService";
+export * from "./TodoService";

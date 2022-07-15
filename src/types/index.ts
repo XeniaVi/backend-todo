@@ -28,6 +28,15 @@ export type TodoPrepared = {
   createdAt: number;
 };
 
+export type RoleNew = {
+  value: string;
+};
+
+export type UserNew = {
+  username: string;
+  password: string;
+};
+
 export type UserDB = {
   _id: Types.ObjectId;
   username: string;

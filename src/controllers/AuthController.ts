@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { AuthService } from "../services";
 
-class AuthController {
+export class AuthController {
   static async registration(req: Request, res: Response, next: NextFunction) {
     try {
       const { username, password } = req.body;
@@ -40,15 +40,4 @@ class AuthController {
       next(error);
     }
   }
-
-  static async getRoles(req: Request, res: Response, next: NextFunction) {
-    try {
-      const response = await AuthService.getRoles();
-      return res.json(response);
-    } catch (error) {
-      next(error);
-    }
-  }
 }
-
-export default AuthController;
