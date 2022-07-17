@@ -17,8 +17,12 @@ export const AuthMiddleware = (
 
     const decodedData = jwt.verify(token, config.SECRET_KEY);
 
-    req.user = decodedData;
-    next();
+    if (typeof decodedData === "string") {
+      next();
+    } else {
+      req.user = {id: decodedData.id, user: decodedData.user};
+      next();
+    }
   } catch (error) {
     next(error);
   }

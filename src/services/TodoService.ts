@@ -11,7 +11,7 @@ export class TodoService {
       value,
       completed,
       createdAt,
-      user_id: id,
+      user: id,
     };
     const newTodo: TodoDB = await Todo.create(sendTodo);
     return prepareTodoObject(newTodo);
@@ -24,8 +24,8 @@ export class TodoService {
     user: UserReq
   ) {
     const query = !completed
-      ? { user_id: user.id }
-      : { completed, user_id: user.id };
+      ? { user: user.id }
+      : { completed, user: user.id };
     const count = await Todo.countDocuments(query);
     let todos: Array<TodoDB> | Array<TodoPrepared> = await Todo.find(query)
       .sort({ createdAt: -1 })

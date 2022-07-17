@@ -6,7 +6,7 @@ export type TodoNew = {
   value: string;
   completed: boolean;
   createdAt: number;
-  user_id: string;
+  user: Types.ObjectId;
 };
 
 export type TodoUpdate = {
@@ -55,8 +55,6 @@ export type PayloadForGenerateToken = {
 };
 
 export type UserReq = {
-  id: string;
+  id: Types.ObjectId;
   user: string;
-  iat: number;
-  exp: number;
 };
