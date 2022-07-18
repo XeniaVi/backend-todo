@@ -6,6 +6,7 @@ export type TodoNew = {
   value: string;
   completed: boolean;
   createdAt: number;
+  user: Types.ObjectId;
 };
 
 export type TodoUpdate = {
@@ -49,6 +50,11 @@ export interface UserExtendedRequest extends Request {
 }
 
 export type PayloadForGenerateToken = {
-  id?: string;
+  id: string;
   username?: string;
+};
+
+export type UserReq = {
+  id: Types.ObjectId;
+  user: string;
 };

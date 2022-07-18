@@ -1,16 +1,31 @@
-import { TodoNew, TodoDB, TodoPrepared, TodoUpdate } from "../types";
+import { TodoNew, TodoDB, TodoPrepared, TodoUpdate, UserReq } from "../types";
 import { Todo } from "../models";
 import { prepareTodoObject } from "../helpers";
 import { ErrorWrongData } from "../errors";
 
 export class TodoService {
-  static async add(todo: TodoNew) {
-    const newTodo: TodoDB = await Todo.create(todo);
+  static async add(todo: TodoNew, user: UserReq) {
+    const { value, completed, createdAt } = todo;
+    const { id } = user;
+    const sendTodo: TodoNew = {
+      value,
+      completed,
+      createdAt,
+      user: id,
+    };
+    const newTodo: TodoDB = await Todo.create(sendTodo);
     return prepareTodoObject(newTodo);
   }
 
-  static async getByFilter(completed: boolean, offset: number, limit: number) {
-    const query = !completed ? {} : { completed };
+  static async getByFilter(
+    completed: boolean,
+    offset: number,
+    limit: number,
+    user: UserReq
+  ) {
+    const query = !completed
+      ? { user: user.id }
+      : { completed, user: user.id };
     const count = await Todo.countDocuments(query);
     let todos: Array<TodoDB> | Array<TodoPrepared> = await Todo.find(query)
       .sort({ createdAt: -1 })
